@@ -1,0 +1,64 @@
+{% extends "nucleo/base.html" %} 
+
+    
+{% block content %}
+
+    
+<section class="body">
+ <section style="display:flex; margin: 30px; justify-content: space-around">
+    <article>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        
+    </article>
+    <article>
+        <a href="{% url 'createEmpleado'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Empleado</a>
+    </article>
+    </section>
+<h2>Empresas</h2>
+
+{% if empresa_list %}
+
+    <table class="table table-striped">
+        <tr>
+         <th>Razon Social</th>
+         <th>Asesor</th>
+        </tr>
+        
+
+
+    {% for e in empresa_list %}
+        {% ifequal e.asesor 'Elena'  %}
+         <tr style="background-color:#BFF882">
+         {% endifequal %}
+         {% ifequal e.asesor 'Carmen' %}
+         <tr style="background-color:#D5C2FD">
+         {% endifequal %}
+         {%  ifequal e.asesor 'Maria' %}
+         <tr style="background-color:#FDE7C2">
+         {% endifequal %}
+         {% ifequal e.asesor 'JoseLuis' %}
+         <tr style="background-color:#B3E5FB;">
+         {% endifequal %}
+         {% ifequal e.asesor 'Sara' %}
+         <tr style="background-color:#FED8E4">
+         {% endifequal %}
+         <td style="font-size:12px">{{e.nombre}}</td>
+         <td style="font-size:12px">{{e.asesor}}</td>
+         <td style="font-weight:bold; background-color:white; font-size:18px; text-align:center"><a href="{%url 'updateEmpresa' e.pk %}" style="color:green">MOD</a></td>
+        </tr>
+     
+           
+           
+        
+   
+    {% endfor %}
+    </table>
+    
+{% else %}
+    <p>Actualmente no hay ninguna empresa en el sistema</p>
+
+    {% endif %}
+
+
+</section>
+{% endblock %}

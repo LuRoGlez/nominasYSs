@@ -1,0 +1,167 @@
+{% extends "nucleo/base.html" %} 
+
+    
+{% block content %}
+
+    
+<section class="body">
+ <article style="align-self:flex-end">
+        <a href="{% url 'empleados'  %}" style="color:black"><button style="background-color:#CCFA7F">Ocultar historial</a>
+        
+    </article>
+ <section style="display:flex; margin: 30px; justify-content: space-around">
+    <article>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        
+    </article>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Buscar" name="buscar">
+                            <span clas="input-group-list">
+                            <i class="icon icon-search"></i>
+                            <button type="submit" class="boton btn-success">Buscar</button>
+                            </span>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <article>
+        <a href="{% url 'createEmpleado'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Empleado</a>
+    </article>
+    </section>
+<h2>Empleados</h2>
+
+{% if empleados %}
+
+    <table class="table table-striped">
+        <tr>
+         <th>Empleado</th>
+         <th>Empresa</th>
+         <th>Tipo Vencimiento</th>
+         <th>Fecha</th>
+         <th>Seg Social</th>
+         <th>SEPE</th>
+         <th>Env. Contrato</th>
+         <th>SAGE</th>
+         <th>Cert. Empresa</th>
+         <th>Env. Liquidación</th>
+         <th>FirmaFY</th>
+        </tr>
+        
+
+
+    {% for e in empleados %}
+        {% if e.fin %}
+        {% ifequal e.empresa.asesor.nombre 'Elena'  %}
+         <tr style="background-color:#BFF882; border-left: green 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre 'Carmen' %}
+         <tr style="background-color:#D5C2FD; border-left: green 15px solid">
+         {% endifequal %}
+         {%  ifequal e.empresa.asesor.nombre 'Maria' %}
+         <tr style="background-color:#FDE7C2; border-left: green 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre 'JoseLuis' %}
+         <tr style="background-color:#B3E5FB; border-left: green 15px solid;">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre 'Sara' %}
+         <tr style="background-color:#FED8E4; border-left: green 15px solid">
+         {% endifequal %}
+         {% elif not e.fin and e.fecha <= hoy %}
+         {% ifequal e.empresa.asesor.nombre 'Elena'  %}
+         <tr style="background-color:#BFF882; border-left: red 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre 'Carmen' %}
+         <tr style="background-color:#D5C2FD; border-left: red 15px solid">
+         {% endifequal %}
+         {%  ifequal e.empresa.asesor.nombre 'Maria' %}
+         <tr style="background-color:#FDE7C2; border-left: red 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre 'JoseLuis' %}
+         <tr style="background-color:#B3E5FB; border-left: red 15px solid;">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre  'Sara' %}
+         <tr style="background-color:#FED8E4; border-left: red 15px solid">
+         {% endifequal %}
+        {% else %}
+        {% ifequal e.empresa.asesor.nombre  'Elena'  %}
+         <tr style="background-color:#BFF882; border-left: orange 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre  'Carmen' %}
+         <tr style="background-color:#D5C2FD; border-left: orange 15px solid">
+         {% endifequal %}
+         {%  ifequal e.empresa.asesor.nombre  'Maria' %}
+         <tr style="background-color:#FDE7C2; border-left: orange 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre  'JoseLuis' %}
+         <tr style="background-color:#B3E5FB; border-left: orange 15px solid">
+         {% endifequal %}
+         {% ifequal e.empresa.asesor.nombre  'Sara' %}
+         <tr style="background-color:#FED8E4; border-left: orange 15px solid">
+         {% endifequal %}
+         {% endif %}
+         
+         <td style="font-size:12px">{{e.nombre}}</td>
+         <td style="font-size:12px">{{e.empresa}}</td>
+         <td style="font-size:12px">{{e.tipo_vencimiento}}</td>
+         <td style="font-size:12px">{{e.fecha}}</td>
+         {% if e.segSocial %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.sepe %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.enviadoContrato %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.sage %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.certificadoEmpresa %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.envioLiquidacion %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+          {% if e.firmaFY %}
+         <td style="text-align:center; background-color:#A6FFA0">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0">No</td>
+         {% endif %}
+         <td style="font-weight:bold; background-color:red; font-size:18px; text-align:center"><a href="{%url 'deleteEmpleado' e.pk %}" style="color:white; backgorund-color:red">X</a></td>
+         <td style="font-weight:bold; background-color:white; font-size:18px; text-align:center"><a href="{%url 'updateEmpleado' e.pk %}" style="color:green">MOD</a></td>
+        </tr>
+     
+           
+           
+        
+   
+    {% endfor %}
+    </table>
+    
+{% else %}
+    <p>Actualmente no hay ningun empleado en el sistema</p>
+
+    {% endif %}
+
+
+</section>
+{% endblock %}

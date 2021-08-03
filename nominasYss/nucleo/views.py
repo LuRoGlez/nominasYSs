@@ -79,3 +79,14 @@ def EmpleadoList(request):
     hoy=now.date()
         
     return render(request, "nucleo/empleado_list.html", {'empleados':empleados, 'hoy':hoy})
+
+@method_decorator([login_required], name='dispatch')
+class modelo111190ListView(ListView):
+    model = modelo111190
+
+@method_decorator([login_required], name='dispatch')
+class modelo111190UpdateView(UpdateView):
+    model=modelo111190
+    fields=['baseIRPF1T', 'reten1T', 'presentado1T', 'baseIRPF2T', 'reten2T', 'presentado2T', 'baseIRPF3T', 'reten3T', 'presentado3T', 'baseIRPF4T', 'reten4T', 'presentado4T','base190', 'reten190']
+    
+    success_url="/listModelo111190"

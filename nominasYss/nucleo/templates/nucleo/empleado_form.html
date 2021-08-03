@@ -1,0 +1,19 @@
+{% extends "nucleo/base.html" %} 
+
+    
+{% block content %}
+
+    
+<section class="body">
+<h2>Añadir o Modificar Empleado</h2>
+
+<form action="" method="POST">
+    {% csrf_token %} 
+  <table>
+    {{form.as_table}}
+  </table>
+    </br>
+    <input type="submit" value="Guardar"/>
+    </form>
+</section>
+    {% endblock %}

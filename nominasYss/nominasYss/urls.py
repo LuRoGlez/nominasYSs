@@ -19,15 +19,8 @@ from django.urls import path, include
 from nucleo import views
 
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('listEmpleado',views.EmpleadoList, name="listEmpleado"),
-    path('createEmpleado',views.EmpleadoCreateView.as_view(), name="createEmpleado"),
-    path('updateEmpleado/<int:pk>',views.EmpleadoUpdateView.as_view(), name="updateEmpleado"),
-    path('deleteEmpleado/<int:pk>',views.EmpleadoDeleteView.as_view(), name="deleteEmpleado"),
-    path('createEmpresa',views.EmpresaCreateView.as_view(), name="createEmpresa"),
-    path('updateEmpresa/<int:pk>',views.EmpresaUpdateView.as_view(), name="updateEmpresa"),
-    path('listEmpresa',views.EmpresaListView.as_view(), name="listEmpresa"),
-    path('empleados',views.Empleados, name="empleados"),
+    path('admin/', admin.site.urls),
+     path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('nucleo.urls')),
 
-   
 ]

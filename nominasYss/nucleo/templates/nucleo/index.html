@@ -3,18 +3,15 @@
     
 {% block content %}
     <section style="display:flex; margin: 30px; justify-content: space-around">
-    <article>
-        <a href="" style="color:white"><button style="background-color:#47B284">Empleados</a>
+ <article>
+        <a href="{% url 'listEmpresa'  %}" style="color:white"><button style="background-color:#C7666F">Empresas</a>
     </article>
     <article>
-        <a href="" style="color:white"><button style="background-color:#C7666F">Empresas</a>
-    </article>
-    <article>
-        <a href="" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
         
     </article>
     <article>
-        <a href="" style="color:white"><button style="background-color:#82ADD2">Añadir Empleado</a>
+        <a href="{% url 'createEmpleado'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Empleado</a>
     </article>
     </section>
   {% endblock %} 
