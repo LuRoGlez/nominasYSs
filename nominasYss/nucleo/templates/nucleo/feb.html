@@ -1,0 +1,113 @@
+{% extends "nucleo/base.html" %} 
+
+    
+{% block content %}
+
+<section class="body">
+    
+    <article style="align-self:flex-end">
+        <a href="{% url 'nominasHistorial'  %}" style="color:black"><button style="background-color:#CCFA7F">Ver Historial</a>
+        
+    </article>
+      <section style="display:flex; margin: 30px; justify-content: space-around">
+      
+    <article>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        
+    </article>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Filtrar por año" name="buscar">
+                            <span clas="input-group-list">
+                            <i class="icon icon-search"></i>
+                            <button type="submit" class="boton btn-success">Buscar</button>
+                            </span>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <article>
+        <a href="{% url 'createnomYSs'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Registro</a>
+    </article>
+    </section>
+<h2>Nóminas y Seguros Sociales</h2>
+<p><a style="color:black" href="{% url 'ene'  %}">Ene</a> | <a style="color:black" href="{% url 'feb'  %}">Feb</a> | <a style="color:black" href="{% url 'mar'  %}">Mar</a> | <a style="color:black" href="{% url 'abr'  %}">Abr</a> | <a style="color:black" href="{% url 'may'  %}">May</a> | <a style="color:black" href="{% url 'jun'  %}">Jun</a> | <a style="color:black" href="{% url 'jul'  %}">Jul</a> | <a style="color:black" href="{% url 'ago'  %}">Ago</a> | <a style="color:black" href="{% url 'sep'  %}">Sep</a> | <a style="color:black" href="{% url 'oct'  %}">Oct</a> | <a style="color:black" href="{% url 'nov'  %}">Nov</a> | <a style="color:black" href="{% url 'dic'  %}">Dic</a></p> 
+{% if nominas %}
+
+    <table class="table table-striped">
+        <tr style="font-size:12px">
+         <th>Empresa</th>
+         <th style="text-align:center">Nóminas</th>
+         <th style="text-align:center">RLC/RNT</th>
+         <th style="text-align:center">CRA</th>
+        </tr>
+        
+
+
+    {% for n in nominas %}
+        
+        {% ifequal n.empresa.asesor.nombre 'Elena'  %}
+         <tr style="background-color:#BFF882">
+         {% endifequal %}
+         {% ifequal n.empresa.asesor.nombre 'Carmen' %}
+         <tr style="background-color:#D5C2FD">
+         {% endifequal %}
+         {%  ifequal n.empresa.asesor.nombre 'Maria' %}
+         <tr style="background-color:#FDE7C2">
+         {% endifequal %}
+         {% ifequal n.empresa.asesor.nombre 'JoseLuis' %}
+         <tr style="background-color:#B3E5FB">
+         {% endifequal %}
+         {% ifequal n.empresa.asesor.nombre 'Sara' %}
+         <tr style="background-color:#FED8E4">
+         {% endifequal %}
+      
+        
+         
+         
+         
+         <td style="font-size:12px">{{n.empresa.nombre}}</td>
+         
+         {% if n.nominas %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+         {% if n.rlcRnt %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+         {% if n.cra %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+          
+     
+         <td style="font-weight:bold; background-color:red; font-size:18px; text-align:center"><a href="{%url 'deletenomYSs' n.pk %}" style="color:white; backgorund-color:red">X</a></td>
+         <td style="font-weight:bold; background-color:white; font-size:18px; text-align:center"><a href="{%url 'updatenomYSs' n.pk %}" style="color:green">MOD</a></td>
+        </tr>
+     
+           
+           
+        
+   
+    {% endfor %}
+    </table>
+    
+{% else %}
+    <p>Actualmente no hay información acerca de los modelos</p>
+
+    {% endif %}
+
+
+</section>
+</section>
+{% endblock %}

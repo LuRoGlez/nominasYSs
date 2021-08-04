@@ -27,19 +27,19 @@
 
 
     {% for e in empresa_list %}
-        {% ifequal e.asesor 'Elena'  %}
+        {% ifequal e.asesor.nombre 'Elena'  %}
          <tr style="background-color:#BFF882">
          {% endifequal %}
-         {% ifequal e.asesor 'Carmen' %}
+         {% ifequal e.asesor.nombre 'Carmen' %}
          <tr style="background-color:#D5C2FD">
          {% endifequal %}
-         {%  ifequal e.asesor 'Maria' %}
+         {%  ifequal e.asesor.nombre 'Maria' %}
          <tr style="background-color:#FDE7C2">
          {% endifequal %}
-         {% ifequal e.asesor 'JoseLuis' %}
+         {% ifequal e.asesor.nombre 'JoseLuis' %}
          <tr style="background-color:#B3E5FB;">
          {% endifequal %}
-         {% ifequal e.asesor 'Sara' %}
+         {% ifequal e.asesor.nombre 'Sara' %}
          <tr style="background-color:#FED8E4">
          {% endifequal %}
          <td style="font-size:12px">{{e.nombre}}</td>

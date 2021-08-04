@@ -7,6 +7,11 @@ from import_export.widgets import ForeignKeyWidget
 
 # Register your models here.
 class EmpresaResource(resources.ModelResource):
+    asesor = fields.Field(
+        column_name='asesor',
+        attribute='asesor',
+        widget=ForeignKeyWidget(Asesor, 'nombre')
+    )
     class Meta:
         model = Empresa
      

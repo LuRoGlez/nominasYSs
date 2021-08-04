@@ -8,14 +8,13 @@ class User(AbstractUser):
 
 class Asesor(models.Model):
     nombre=models.CharField(max_length=50)
-    idUsuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name="asesorA")
+    idUsuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name="asesor")
 
     def __str__(self):
         return " Asesor: "+self.nombre
 
 class Empresa(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
-    codigo = models.IntegerField(unique=True)
     asesor = models.ForeignKey(Asesor, on_delete=models.CASCADE,related_name="asesorEmp")
 
     def __str__(self):
@@ -25,8 +24,28 @@ class nomYSs(models.Model):
     nominas = models.BooleanField(default=False)
     rlcRnt = models.BooleanField(default=False)
     cra = models.BooleanField(default=False)
-    mes = models.DateField(null=True, blank = True)
+    class Meses(models.TextChoices):
+        Enero = 'Enero'
+        Febrero = 'Febrero'
+        Marzo = 'Marzo'
+        Abril = 'Abril'
+        Mayo= 'Mayo'
+        Junio = 'junio'
+        Julio = 'Julio'
+        Agosto = 'Agosto'
+        Septiembre = 'Septiembre'
+        Octubre = 'Octubre'
+        Noviembre = 'Noviembre'
+        Diciembre = 'Diciembre'
+        
+    mes =  models.CharField(max_length=25, choices=Meses.choices, blank=True, default='Enero')
+    anyo = models.IntegerField(default=2021)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE,related_name="empresaNom")
+    fin=models.BooleanField(default=False)
+    oculto=models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['mes']
 
 class modelo111190(models.Model):
     baseIRPF1T = models.FloatField(default=0)
@@ -41,13 +60,19 @@ class modelo111190(models.Model):
     baseIRPF4T = models.FloatField(default=0)
     reten4T = models.FloatField(default=0)
     presentado4T = models.BooleanField(default=False)
-    ###bases111 = models.FloatField(null=True, blank=True)
-    ###retenciones111= models.FloatField(null=True, blank=True)
     base190 = models.FloatField(default=0)
     reten190 = models.FloatField(default=0)
-    ###difBase = models.FloatField(null=True, blank=True)
-    ###difReten= models.FloatField(null=True, blank=True)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE,  related_name="empresa111")
+    anyo = models.IntegerField(default = 2021)
+    fin=models.BooleanField(default=False)
+    oculto=models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-anyo']
+
+    def __str__(self):
+        return "Empresa: "+self.empresa.nombre
+        
 
     @property
     def sumaBase(self):

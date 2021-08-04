@@ -1,0 +1,143 @@
+{% extends "nucleo/base.html" %} 
+
+    
+{% block content %}
+    <section class="body">
+    <article style="align-self:flex-end">
+        <a href="{% url 'modelo111190Historial'  %}" style="color:black"><button style="background-color:#CCFA7F">Ver Historial</a>
+        
+    </article>
+      <section style="display:flex; margin: 30px; justify-content: space-around">
+      
+    <article>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        
+    </article>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Filtrar por año" name="buscar">
+                            <span clas="input-group-list">
+                            <i class="icon icon-search"></i>
+                            <button type="submit" class="boton btn-success">Buscar</button>
+                            </span>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <article>
+        <a href="{% url 'createModelo111190'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Registro</a>
+    </article>
+    </section>
+<h2>Modelos 111 y 190</h2>
+
+{% if modelo111 %}
+
+    <table class="table table-striped">
+        <tr style="font-size:12px">
+         <th>Empresa</th>
+         <th style="background-color: #E0E3AA">Base IRPF</th>
+         <th style="background-color: #E0E3AA">Retención</th>
+         <th style="background-color: #E0E3AA">Presentado</th>
+         <th style="background-color: #DBDE81">Base IRPF</th>
+         <th style="background-color: #DBDE81">Retención</th>
+         <th style="background-color: #DBDE81">Presentado</th>
+         <th style="background-color: #E7EB45">Base IRPF</th>
+         <th style="background-color: #E7EB45">Retención</th>
+         <th style="background-color: #E7EB45">Presentado</th>
+         <th style="background-color: #D1D403">Base IRPF</th>
+         <th style="background-color: #D1D403">Retención</th>
+         <th style="background-color: #D1D403">Presentado</th>
+         <th>Bases 111</th>
+         <th>Retenciones 111</th>
+         <th>Base 190</th>
+         <th>Retención 190</th>
+         <th>Dif. Bases</th>
+         <th>Dif. Retenciones</th>
+        </tr>
+        
+
+
+    {% for m in modelo111 %}
+        
+        {% ifequal m.empresa.asesor.nombre 'Elena'  %}
+         <tr style="background-color:#BFF882">
+         {% endifequal %}
+         {% ifequal m.empresa.asesor.nombre 'Carmen' %}
+         <tr style="background-color:#D5C2FD">
+         {% endifequal %}
+         {%  ifequal m.empresa.asesor.nombre 'Maria' %}
+         <tr style="background-color:#FDE7C2">
+         {% endifequal %}
+         {% ifequal m.empresa.asesor.nombre 'JoseLuis' %}
+         <tr style="background-color:#B3E5FB">
+         {% endifequal %}
+         {% ifequal m.empresa.asesor.nombre 'Sara' %}
+         <tr style="background-color:#FED8E4">
+         {% endifequal %}
+      
+        
+         
+         
+         <td style="font-size:12px">{{m.empresa.nombre}}</td>
+         <td style="font-size:12px">{{m.baseIRPF1T}}€</td>
+         <td style="font-size:12px">{{m.reten1T}}€</td>
+         {% if m.presentado1T %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+          <td style="font-size:12px">{{m.baseIRPF2T}}€</td>
+         <td style="font-size:12px">{{m.reten2T}}€</td>
+         {% if m.presentado2T %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+          <td style="font-size:12px">{{m.baseIRPF3T}}€</td>
+         <td style="font-size:12px">{{m.reten3T}}€</td>
+         {% if m.presentado3T %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+          <td style="font-size:12px">{{m.baseIRPF4T}}€</td>
+         <td style="font-size:12px">{{m.reten4T}}€</td>
+         {% if m.presentado4T %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+         <td style="font-size:12px">{{m.sumaBase}}€</td>
+         <td style="font-size:12px">{{m.sumaRetenciones}}€</td>
+         <td style="font-size:12px">{{m.base190}}€</td>
+         <td style="font-size:12px">{{m.reten190}}€</td>
+         <td style="font-size:12px">{{m.diferenciaBase}}€</td>
+         <td style="font-size:12px">{{m.diferenciaRetencion}}€</td>
+     
+         <td style="font-weight:bold; background-color:red; font-size:18px; text-align:center"><a href="{%url 'deleteModelo111190' m.pk %}" style="color:white; backgorund-color:red">X</a></td>
+         <td style="font-weight:bold; background-color:white; font-size:18px; text-align:center"><a href="{%url 'updateModelo111190' m.pk %}" style="color:green">MOD</a></td>
+        </tr>
+     
+           
+           
+        
+   
+    {% endfor %}
+    </table>
+    
+{% else %}
+    <p>Actualmente no hay información acerca de los modelos</p>
+
+    {% endif %}
+
+
+</section>
+</section>
+    
+{% endblock %} 

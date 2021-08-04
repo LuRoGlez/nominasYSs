@@ -2,10 +2,41 @@
 
     
 {% block content %}
-       </section>
+    <section class="body">
+    <article style="align-self:flex-end">
+        <a href="{% url 'modelo111190'  %}" style="color:black"><button style="background-color:#CCFA7F">Ocultar Historial</a>
+        
+    </article>
+      <section style="display:flex; margin: 30px; justify-content: space-around">
+      
+    <article>
+        <a href="{% url 'createEmpresa'  %}" style="color:white"><button style="background-color:orange">Añadir Empresa</a>
+        
+    </article>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Filtrar por año" name="buscar">
+                            <span clas="input-group-list">
+                            <i class="icon icon-search"></i>
+                            <button type="submit" class="boton btn-success">Buscar</button>
+                            </span>
+                        </div>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <article>
+        <a href="{% url 'createModelo111190'  %}" style="color:white"><button style="background-color:#82ADD2">Añadir Registro</a>
+    </article>
+    </section>
 <h2>Modelos 111 y 190</h2>
 
-{% if modelo111190_list %}
+{% if modelo111 %}
 
     <table class="table table-striped">
         <tr style="font-size:12px">
@@ -32,7 +63,7 @@
         
 
 
-    {% for m in modelo111190_list %}
+    {% for m in modelo111 %}
         
         {% ifequal m.empresa.asesor.nombre 'Elena'  %}
          <tr style="background-color:#BFF882">
@@ -89,7 +120,7 @@
          <td style="font-size:12px">{{m.diferenciaBase}}€</td>
          <td style="font-size:12px">{{m.diferenciaRetencion}}€</td>
      
-         <td style="font-weight:bold; background-color:red; font-size:18px; text-align:center"><a href="" style="color:white; backgorund-color:red">X</a></td>
+         <td style="font-weight:bold; background-color:red; font-size:18px; text-align:center"><a href="{%url 'deleteModelo111190' m.pk %}" style="color:white; backgorund-color:red">X</a></td>
          <td style="font-weight:bold; background-color:white; font-size:18px; text-align:center"><a href="{%url 'updateModelo111190' m.pk %}" style="color:green">MOD</a></td>
         </tr>
      
@@ -106,6 +137,7 @@
     {% endif %}
 
 
+</section>
 </section>
     
 {% endblock %} 
