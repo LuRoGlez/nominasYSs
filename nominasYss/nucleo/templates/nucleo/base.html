@@ -21,21 +21,21 @@
         <nav>
             <ul class="horizontal">
                 
-                <li>
-                 <a href="{% url 'empleados'  %}">Altas y Bajas</a>
+                <li style="padding:0px; margin:0px">
+                 <a   style="padding:15px" href="{% url 'empleados'  %}">Altas y Bajas</a>
                 </li>                     
                 
                 
-                <li>
-                 <a href="{% url 'nominas'  %}">Nominas y SS</a>
+                <li style="padding:0px; margin:0px">
+                 <a style="padding:15px" href="{% url 'nominas'  %}">Nominas y SS</a>
                 </li>                     
                 
-                <li>
-                    <a href="{% url 'modelo111190' %}">Modelo 111</a>
+                <li style="padding:0px; margin:0px">
+                    <a style="padding:15px" href="{% url 'modelo111190' %}">Modelo 111</a>
                 </li>
               
               
-                <li>
+                <li style="padding:0px; margin:0px">
                     {% if not request.user.is_authenticated %}
                     <a href="{% url 'login'  %}">Iniciar Sesión</a>
                     {% else %}
