@@ -20,9 +20,11 @@ def Empleados(request):
     queryset = request.GET.get("buscar")
     empleados=Empleado.objects.filter(oculto = False)
     if queryset:
-        empleados = Empleado.objects.filter(
+        empleados = Empleado.objects.filter(oculto = False).filter(
             Q(nombre__icontains = queryset) |
-            Q(fecha__icontains = queryset) 
+            Q(fecha__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
     hoy=now.date()
     empl = Empleado.objects.filter(fin=False, fecha__lte=hoy)
@@ -53,7 +55,7 @@ class EmpleadoDeleteView(DeleteView):
 @method_decorator([login_required], name='dispatch')
 class EmpresaCreateView(CreateView):
     model=Empresa
-    fields=('nombre', 'asesor', 'codigo')
+    fields=('nombre', 'asesor')
     success_url="/empleados" 
 
 @method_decorator([login_required], name='dispatch')
@@ -74,7 +76,9 @@ def EmpleadoList(request):
     if queryset:
         empleados = Empleado.objects.filter(
             Q(nombre__icontains = queryset) |
-            Q(fecha__icontains = queryset) 
+            Q(fecha__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
     hoy=now.date()
         
@@ -87,7 +91,9 @@ def Modelo111190(request):
     modelo111=modelo111190.objects.filter(oculto = False)
     if queryset:
         modelo111 = modelo111190.objects.filter(
-            Q(anyo__icontains = queryset) 
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
     
             
@@ -96,7 +102,7 @@ def Modelo111190(request):
 @method_decorator([login_required], name='dispatch')
 class modelo111190UpdateView(UpdateView):
     model=modelo111190
-    fields=['baseIRPF1T', 'reten1T', 'presentado1T', 'baseIRPF2T', 'reten2T', 'presentado2T', 'baseIRPF3T', 'reten3T', 'presentado3T', 'baseIRPF4T', 'reten4T', 'presentado4T','base190', 'reten190', 'fin', 'oculto']
+    fields=['baseIRPF1T', 'reten1T', 'presentado1T', 'baseIRPF2T', 'reten2T', 'presentado2T', 'baseIRPF3T', 'reten3T', 'presentado3T', 'baseIRPF4T', 'reten4T', 'presentado4T','base190', 'reten190', 'anyo','fin', 'oculto']
     
     success_url="/modelo111190"
 
@@ -113,8 +119,10 @@ def Nominas(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -154,12 +162,15 @@ def NominasHistorial(request):
     
     if queryset:
         nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+            Q(anyo__icontains = queryset) |
+            Q(mes__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
     emElena= Empresa.objects.filter(asesor = 1).count()
-    emMaria= Empresa.objects.filter(asesor = 3).count()
+    emMaria= Empresa.objects.filter(asesor = 3).count() 
     emCarmen= Empresa.objects.filter(asesor = 2).count()
     emSara= Empresa.objects.filter(asesor = 5).count()
     emJoseLuis= Empresa.objects.filter(asesor = 4).count()
@@ -167,38 +178,20 @@ def NominasHistorial(request):
 
     return render(request, "nucleo/nominasHistorial.html", {'empresas':empresas, 'nominas':nominas, 'emElena':emElena, 'emMaria':emMaria, 'emSara':emSara, 'emCarmen':emCarmen, 'emJoseLuis':emJoseLuis})
 
-@login_required(login_url='/accounts/login/')
-def Ene(request):
-    empresas=Empresa.objects.all()
-    nominas= nomYSs.objects.filter(oculto = False).filter(mes = 'Enero')
-    
-    queryset = request.GET.get("buscar")
-    
-    if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
-        ).distinct
-
-
-    emElena= Empresa.objects.filter(asesor = 1).count()
-    emMaria= Empresa.objects.filter(asesor = 3).count()
-    emCarmen= Empresa.objects.filter(asesor = 2).count()
-    emSara= Empresa.objects.filter(asesor = 5).count()
-    emJoseLuis= Empresa.objects.filter(asesor = 4).count()
-
-
-    return render(request, "nucleo/ene.html", {'empresas':empresas, 'nominas':nominas, 'emElena':emElena, 'emMaria':emMaria, 'emSara':emSara, 'emCarmen':emCarmen, 'emJoseLuis':emJoseLuis})
 
 @login_required(login_url='/accounts/login/')
 def Ene(request):
     empresas=Empresa.objects.all()
     nominas= nomYSs.objects.filter(oculto = False).filter(mes = 'Enero')
     
+    
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Enero').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -219,8 +212,10 @@ def Feb(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Febrero').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -241,8 +236,10 @@ def Mar(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Marzo').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -263,8 +260,10 @@ def Abr(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Abril').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -285,8 +284,10 @@ def May(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Mayo').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -307,8 +308,10 @@ def Jun(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Junio').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -329,8 +332,10 @@ def Jul(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Julio').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -352,8 +357,10 @@ def Ago(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Agosto').filter(            
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -374,8 +381,10 @@ def Sep(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Septiembre').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -396,8 +405,10 @@ def Oct(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Octubre').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -418,8 +429,10 @@ def Nov(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Noviembre').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -440,8 +453,10 @@ def Dic(request):
     queryset = request.GET.get("buscar")
     
     if queryset:
-        nominas = nomYSs.objects.filter(
-            Q(anyo__icontains = queryset) 
+        nominas = nomYSs.objects.filter(oculto = False).filter(mes='Diciembre').filter(
+            Q(anyo__icontains = queryset) |
+            Q(empresa__asesor__nombre__icontains = queryset) |
+            Q(empresa__nombre__icontains = queryset)
         ).distinct
 
 
@@ -457,7 +472,7 @@ def Dic(request):
 @method_decorator([login_required], name='dispatch')
 class nomYSsUpdateView(UpdateView):
     model=nomYSs
-    fields=['nominas', 'rlcRnt', 'cra', 'fin', 'oculto']
+    fields=['nominas', 'rlcRnt', 'cra', 'anyo', 'mes', 'fin', 'oculto']
     
     success_url="/nominas"
 

@@ -21,7 +21,7 @@
                 <form method="get">
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="form-control" placeholder="Filtrar por año" name="buscar">
+                            <input type="text" class="form-control" placeholder="Filtrar por año, empresa o asesor" name="buscar">
                             <span clas="input-group-list">
                             <i class="icon icon-search"></i>
                             <button type="submit" class="boton btn-success">Buscar</button>
@@ -46,6 +46,7 @@
          <th style="text-align:center">Nóminas</th>
          <th style="text-align:center">RLC/RNT</th>
          <th style="text-align:center">CRA</th>
+         <th style="text-align:center">Recálculo % IRPF</th>
         </tr>
         
 
@@ -85,6 +86,11 @@
          <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
          {% endif %}
          {% if n.cra %}
+         <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
+         {% else %}
+         <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>
+         {% endif %}
+          {% if n.recalculo %}
          <td style="text-align:center; background-color:#A6FFA0; font-size:12px">Hecho</td>
          {% else %}
          <td style="text-align:center; background-color:#FFA0A0; font-size:12px">No</td>

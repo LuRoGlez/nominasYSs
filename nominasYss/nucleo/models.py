@@ -11,14 +11,14 @@ class Asesor(models.Model):
     idUsuario = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, related_name="asesor")
 
     def __str__(self):
-        return " Asesor: "+self.nombre
+        return self.nombre
 
 class Empresa(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     asesor = models.ForeignKey(Asesor, on_delete=models.CASCADE,related_name="asesorEmp")
 
     def __str__(self):
-        return " Empresa: "+self.nombre
+        return self.nombre
 
 class nomYSs(models.Model):
     nominas = models.BooleanField(default=False)
@@ -39,6 +39,7 @@ class nomYSs(models.Model):
         Diciembre = 'Diciembre'
         
     mes =  models.CharField(max_length=25, choices=Meses.choices, blank=True, default='Enero')
+    recalculo = models.BooleanField(default=False)
     anyo = models.IntegerField(default=2021)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE,related_name="empresaNom")
     fin=models.BooleanField(default=False)
@@ -71,7 +72,7 @@ class modelo111190(models.Model):
         ordering = ['-anyo']
 
     def __str__(self):
-        return "Empresa: "+self.empresa.nombre
+        return self.empresa.nombre
         
 
     @property
@@ -110,7 +111,7 @@ class modelo111190(models.Model):
 
 class Empleado (models.Model):
     nombre = models.CharField(max_length=100)
-    empresa=models.ForeignKey(Empresa, verbose_name="Empresa", on_delete=models.CASCADE, related_name='empresaEmp')
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='empresaEmp')
 
     class Vencimientos(models.TextChoices):
         ALTA = 'ALTA'
@@ -148,4 +149,4 @@ class Empleado (models.Model):
     
 
     def __str__(self):
-        return " Empleado: "+self.nombre+" Empresa: "+self.empresa.nombre+" Tipo Vencimiento: "+self.tipo_vencimiento
+        return self.nombre+" "+self.empresa.nombre+" Tipo Vencimiento: "+self.tipo_vencimiento
